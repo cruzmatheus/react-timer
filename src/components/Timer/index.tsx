@@ -6,10 +6,11 @@ import Clock from "./Clock"
 import style from './Timer.module.scss'
 
 interface Props {
-  selected?: ITask
+  selected?: ITask,
+  finishTask: () => void
 }
 
-export default function Timer({ selected }: Props) {
+export default function Timer({ selected, finishTask }: Props) {
   const [time, setTime] = useState<number>()
 
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function Timer({ selected }: Props) {
         setTime(timer - 1)
         return countDown(timer - 1)
       }
+      finishTask()
     }, 1000)
   }
 

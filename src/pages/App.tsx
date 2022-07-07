@@ -7,13 +7,29 @@ import style from './App.module.scss';
 
 function App() {
   const [tasks, setTasks] = useState<ITask[]>([])
-  const [selected, setSelected] = useState<ITask>()
+  const [selectedTask, setSelectedTask] = useState<ITask>()
   
   function selectTask(selectedTask: ITask) {
-    setSelected(selectedTask)
+    setSelectedTask(selectedTask)
     setTasks(previousTasks => previousTasks.map(task => (
         {...task, selected: task.id === selectedTask.id ? true : false}
     )))
+  }
+
+  function finishTask() {
+    if (selectedTask) {
+      setSelectedTask(undefined)
+      setTasks(previousTasks => previousTasks.map(task => {
+        if (task.id === selectedTask.id) {
+          return {
+            ...task,
+            selected: false,
+            completed: true
+          }
+        }
+        return task
+      }))
+    }
   }
 
   return (
@@ -23,7 +39,10 @@ function App() {
         tasks={tasks} 
         selectTask={selectTask}
       />
-      <Timer selected={selected} />
+      <Timer
+        selected={selectedTask}
+        finishTask={finishTask}
+      />
     </div>
   );
 }
