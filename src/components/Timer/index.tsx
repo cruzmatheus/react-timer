@@ -16,13 +16,22 @@ export default function Timer({ selected }: Props) {
     if (selected?.time) setTime(timeToSeconds(selected.time))
   }, [selected])
 
+  function countDown(timer: number = 0) {
+    setTimeout(() => {
+      if (timer > 0) {
+        setTime(timer - 1)
+        return countDown(timer - 1)
+      }
+    }, 1000)
+  }
+
   return (
     <div className={style.cronometro}>
       <p className={style.titulo}>Choose a card and start the timer</p>
       <div className={style.relogioWrapper}>
         <Clock time={time}/>
       </div>
-      <Button>
+      <Button onClick={() => countDown(time)}>
         Start!
       </Button>
     </div>
