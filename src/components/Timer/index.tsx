@@ -1,3 +1,4 @@
+import { timeToSeconds } from "../../common/utils/time"
 import Button from "../Button"
 import Clock from "./Clock"
 import style from './Timer.module.scss'
